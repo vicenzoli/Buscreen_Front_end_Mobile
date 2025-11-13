@@ -7,7 +7,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import LinhasScreen from './src/screens/Linhas';
 import ProfileScreen from './src/screens/ProfileScreen';
-import AboutScreen from './src/screens/AboutScreen'; // <- nova tela
+import AboutScreen from './src/screens/AboutScreen'; // <- "Sobre nós"
 
 const Stack = createNativeStackNavigator();
 

@@ -21,7 +21,7 @@ const LinhaItem = ({ id, nome, isSelected, onPress }) => (
     style={[styles.linhaCard, isSelected && styles.linhaCardSelected]}
     onPress={onPress}
   >
-    <MaterialCommunityIcons name="bus" size={24} color="#000" style={styles.linhaIcon} />
+    <MaterialCommunityIcons name="bus" size={24} color="#FF8C00" style={styles.linhaIcon} />
     <View>
       <Text style={styles.linhaNome}>{nome}</Text>
       <Text style={styles.linhaID}>{id}</Text>
@@ -34,7 +34,7 @@ export default function LinhasScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Cabeçalho com navegação */}
+      {/* Cabeçalho sem "Feedback" */}
       <View style={styles.header}>
         <View style={styles.logoContainer}>
           <Text style={styles.logoTextBold}>bu</Text>
@@ -45,11 +45,8 @@ export default function LinhasScreen({ navigation }) {
             <Text style={styles.menuItem}>Home</Text>
           </TouchableOpacity>
           <Text style={[styles.menuItem, styles.activeMenuItem]}>Linhas</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Sobre')}>
             <Text style={styles.menuItem}>Sobre nós</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.menuItem}>Feedback</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -100,25 +97,20 @@ export default function LinhasScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', paddingHorizontal: 20, paddingTop: 10 },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
+  container: { flex: 1, backgroundColor: '#FF8C00', paddingHorizontal: 20, paddingTop: 10 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   logoContainer: { flexDirection: 'row' },
-  logoTextBold: { fontSize: 24, fontWeight: 'bold', color: '#FF8C00' },
-  logoTextLight: { fontSize: 24, fontWeight: '300', color: '#000' },
+  logoTextBold: { fontSize: 24, fontWeight: 'bold', color: '#fff' },
+  logoTextLight: { fontSize: 24, fontWeight: '300', color: '#fff' },
   menuContainer: { flexDirection: 'row', alignItems: 'center' },
-  menuItem: { marginLeft: 15, fontSize: 14, color: '#333' },
-  activeMenuItem: { fontWeight: 'bold', color: '#FF8C00' },
+  menuItem: { marginLeft: 15, fontSize: 14, color: '#fff' },
+  activeMenuItem: { fontWeight: 'bold', textDecorationLine: 'underline', color: '#fff' },
 
-  title: { fontSize: 24, fontWeight: 'bold', color: '#FF8C00', marginBottom: 15 },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#fff', marginBottom: 15 },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
     borderRadius: 10,
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -129,40 +121,24 @@ const styles = StyleSheet.create({
   linhaCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fff',
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#ffd5a3',
   },
-  linhaCardSelected: {
-    borderColor: '#FF8C00',
-    backgroundColor: '#fffbe6',
-  },
+  linhaCardSelected: { borderColor: '#FF8C00', backgroundColor: '#fffbe6' },
   linhaIcon: { marginRight: 15 },
-  linhaNome: { fontSize: 16, fontWeight: 'bold', color: '#000' },
-  linhaID: { fontSize: 14, color: '#666' },
+  linhaNome: { fontSize: 16, fontWeight: 'bold', color: '#FF8C00' },
+  linhaID: { fontSize: 14, color: '#333' },
 
-  trajetoContainer: {
-    marginTop: 20,
-    padding: 20,
-    backgroundColor: '#DDEEFF',
-    borderRadius: 10,
-  },
+  trajetoContainer: { marginTop: 20, padding: 20, backgroundColor: '#fff', borderRadius: 10 },
   trajetoTitle: { fontSize: 20, fontWeight: 'bold', color: '#FF8C00', marginBottom: 10 },
   trajetoNome: { fontSize: 18, color: '#333', marginBottom: 10 },
-  trajetoBox: {
-    backgroundColor: '#BFE0FF',
-    padding: 15,
-    borderRadius: 8,
-  },
+  trajetoBox: { backgroundColor: '#BFE0FF', padding: 15, borderRadius: 8 },
   trajetoInfo: { fontSize: 14, color: '#333' },
 
-  footer: {
-    marginTop: 20,
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  footerText: { fontSize: 12, color: '#999' },
+  footer: { alignItems: 'center', paddingVertical: 10 },
+  footerText: { fontSize: 12, color: '#fff' },
 });

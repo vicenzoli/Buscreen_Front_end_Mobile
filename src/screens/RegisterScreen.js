@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
 export default function RegisterScreen({ navigation }) {
   const [nome, setNome] = useState('');
@@ -14,7 +7,6 @@ export default function RegisterScreen({ navigation }) {
   const [senha, setSenha] = useState('');
 
   const handleRegister = () => {
-    // Aqui você pode adicionar validação ou integração com backend
     Alert.alert('Cadastro realizado!', `Bem-vindo, ${nome}`);
     navigation.navigate('Login');
   };
@@ -59,24 +51,18 @@ export default function RegisterScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 30, backgroundColor: '#fff' },
-  title: { fontSize: 28, fontWeight: 'bold', color: '#FF8C00', marginBottom: 30, textAlign: 'center' },
+  container: { flex: 1, backgroundColor: '#FF8C00', justifyContent: 'center', padding: 30 },
+  title: { fontSize: 28, fontWeight: 'bold', color: '#fff', marginBottom: 30, textAlign: 'center' },
   input: {
     height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
+    backgroundColor: '#fff',
     borderRadius: 10,
     paddingHorizontal: 15,
     marginBottom: 20,
     fontSize: 16,
     color: '#333',
   },
-  button: {
-    backgroundColor: '#FF8C00',
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
-  link: { color: '#FF8C00', textAlign: 'center', fontSize: 14 },
+  button: { backgroundColor: '#fff', paddingVertical: 15, borderRadius: 10, marginBottom: 15 },
+  buttonText: { color: '#FF8C00', fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
+  link: { color: '#fff', textAlign: 'center', fontSize: 14 },
 });
