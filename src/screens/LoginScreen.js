@@ -61,9 +61,11 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.linkText}>Esqueceu a senha?</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.registerButton}>
-        <Text style={styles.linkText}>Não tem conta? **Cadastre-se**</Text>
-      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+  <Text style={{ color: '#FF8C00', textAlign: 'center', marginTop: 20 }}>
+    Não tem conta? Cadastrar-se
+  </Text>
+</TouchableOpacity>
     </View>
   );
 };

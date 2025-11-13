@@ -179,3 +179,13 @@ const styles = StyleSheet.create({
   },
   mapText: { color: '#333', fontStyle: 'italic', textAlign: 'center', padding: 20 },
 });
+const handleShortcutPress = (screenName) => {
+  if (screenName === 'Perfil') {
+    navigation.navigate('Perfil', {
+      nome: 'Vicenzo',
+      email: 'vicenzo@email.com',
+    });
+  } else {
+    navigation.navigate(screenName);
+  }
+};
