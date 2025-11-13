@@ -6,7 +6,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import LinhasScreen from './src/screens/Linhas';
-import ProfileScreen from './src/screens/ProfileScreen'; // <- nova tela
+import ProfileScreen from './src/screens/ProfileScreen';
+import AboutScreen from './src/screens/AboutScreen'; // <- nova tela
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Linhas" component={LinhasScreen} />
         <Stack.Screen name="Perfil" component={ProfileScreen} />
+        <Stack.Screen name="Sobre" component={AboutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -17,22 +17,34 @@ import {
 
 const { width } = Dimensions.get('window');
 
+// 🔥 Atalhos atualizados
 const atalhos = [
   { name: 'Linhas', icon: 'bus-marker', screen: 'Linhas' },
-  { name: 'Favoritos', icon: 'star-outline', screen: 'Favoritos' },
-  { name: 'Mapa', icon: 'map-outline', screen: 'Mapa' },
   { name: 'Perfil', icon: 'account-outline', screen: 'Perfil' },
+  { name: 'Sobre nós', icon: 'information-outline', screen: 'Sobre' },
 ];
 
 const ShortcutCard = ({ name, icon, screen, navigation }) => (
   <TouchableOpacity
     style={styles.shortcutCard}
-    onPress={() => navigation.navigate(screen)}
+    onPress={() => handleShortcutPress(screen, navigation)}
   >
     <MaterialCommunityIcons name={icon} size={30} color="#FF8C00" />
     <Text style={styles.shortcutText}>{name}</Text>
   </TouchableOpacity>
 );
+
+// 🔁 Função de navegação centralizada
+const handleShortcutPress = (screenName, navigation) => {
+  if (screenName === 'Perfil') {
+    navigation.navigate('Perfil', {
+      nome: 'Vicenzo',
+      email: 'vicenzo@email.com',
+    });
+  } else {
+    navigation.navigate(screenName);
+  }
+};
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -133,7 +145,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   shortcutCard: {
-    width: (width - 60) / 4,
+    width: (width - 60) / 3,
     alignItems: 'center',
     paddingVertical: 10,
     backgroundColor: '#fff',
@@ -143,6 +155,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
+    marginBottom: 10,
   },
   shortcutText: { fontSize: 12, marginTop: 5, color: '#333', fontWeight: '500' },
   infoCard: {
@@ -179,13 +192,3 @@ const styles = StyleSheet.create({
   },
   mapText: { color: '#333', fontStyle: 'italic', textAlign: 'center', padding: 20 },
 });
-const handleShortcutPress = (screenName) => {
-  if (screenName === 'Perfil') {
-    navigation.navigate('Perfil', {
-      nome: 'Vicenzo',
-      email: 'vicenzo@email.com',
-    });
-  } else {
-    navigation.navigate(screenName);
-  }
-};
