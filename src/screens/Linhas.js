@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
-
-const linhas = [
-  { id: '1025', nome: 'Linha Noturna' },
-  { id: '1011', nome: 'São José/Florianópolis' },
-  { id: '1021', nome: 'Cidade Universitária' },
-  { id: '1022', nome: 'Formiga/Shop Continente' },
-];
 
 const LinhaItem = ({ id, nome, isSelected, onPress }) => (
   <TouchableOpacity
@@ -30,11 +23,47 @@ const LinhaItem = ({ id, nome, isSelected, onPress }) => (
 );
 
 export default function LinhasScreen({ navigation }) {
+  const [linhas, setLinhas] = useState([]);
   const [linhaSelecionada, setLinhaSelecionada] = useState(null);
+  const [searchID, setSearchID] = useState("");
+
+  
+  useEffect(() => {
+    fetch("https://projeto-sa-buscreen.onrender.com/api/linhas")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Dados recebidos:", data);
+        setLinhas(data.linhas); 
+      })
+      .catch((error) => {
+        console.log(" Erro ao buscar linhas:", error);
+      });
+  }, []);
+
+  const buscarLinhaPorID = (id) => {
+    if (!id) return;
+  
+    fetch(`https://projeto-sa-buscreen.onrender.com/api/linhas/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Linha não encontrada");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLinhaSelecionada(data); 
+      })
+      .catch((error) => {
+        console.log(" Erro ao buscar linha por ID:", error.message);
+        setLinhaSelecionada(null); 
+      });
+  };
+  
+  
 
   return (
     <View style={styles.container}>
-      {/* Cabeçalho sem "Feedback" */}
+      {}
       <View style={styles.header}>
         <View style={styles.logoContainer}>
           <Text style={styles.logoTextBold}>bu</Text>
@@ -51,44 +80,51 @@ export default function LinhasScreen({ navigation }) {
         </View>
       </View>
 
-      {/* Título */}
+      {}
       <Text style={styles.title}>Linhas de Ônibus</Text>
 
-      {/* Barra de pesquisa */}
+      {}
       <View style={styles.searchBar}>
-        <AntDesign name="search1" size={20} color="#666" />
+        <AntDesign name="search" size={20} color="#666" />
         <TextInput
-          placeholder="Pesquise por uma linha"
+          placeholder="Pesquise por ID da linha"
           placeholderTextColor="#666"
           style={styles.searchInput}
-        />
+          value={searchID}
+          onChangeText={setSearchID}
+          onSubmitEditing={() => buscarLinhaPorID(searchID)}
+          keyboardType="numeric"
+/>
       </View>
 
-      {/* Lista de linhas */}
+      {}
       <ScrollView style={styles.linhasList}>
-        {linhas.map((linha) => (
-          <LinhaItem
-            key={linha.id}
-            id={linha.id}
-            nome={linha.nome}
-            isSelected={linhaSelecionada?.id === linha.id}
-            onPress={() => setLinhaSelecionada(linha)}
-          />
-        ))}
+      {linhas.map((linha) => (
+   <LinhaItem
+    key={linha.id.toString()} 
+    id={linha.id}
+    nome={linha.nome_linha}
+    isSelected={linhaSelecionada?.id === linha.id}
+    onPress={() => setLinhaSelecionada(linha)}
+  />
+))}
+
       </ScrollView>
 
-      {/* Trajeto da linha selecionada */}
+      {}
       {linhaSelecionada && (
         <View style={styles.trajetoContainer}>
-          <Text style={styles.trajetoTitle}>Trajeto:</Text>
-          <Text style={styles.trajetoNome}>{linhaSelecionada.nome}</Text>
+          <Text style={styles.trajetoTitle}>Detalhes da Linha:</Text>
+          <Text style={styles.trajetoNome}>{linhaSelecionada.nome_linha}</Text>
           <View style={styles.trajetoBox}>
-            <Text style={styles.trajetoInfo}>🗺️ Mapa ou descrição do trajeto aqui</Text>
+            <Text style={styles.trajetoInfo}>🚌 Companhia: {linhaSelecionada.companhia}</Text>
+            <Text style={styles.trajetoInfo}>👥 Lotação máxima: {linhaSelecionada.lotacao_maxima}</Text>
+            <Text style={styles.trajetoInfo}>⏰ Horário: {linhaSelecionada.horario}</Text>
           </View>
         </View>
       )}
 
-      {/* Rodapé */}
+      {}
       <View style={styles.footer}>
         <Text style={styles.footerText}>© 2025 Buscreen. Todos os direitos reservados.</Text>
       </View>

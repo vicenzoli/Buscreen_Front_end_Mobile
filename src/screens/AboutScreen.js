@@ -4,7 +4,6 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 export default function AboutScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      {/* Cabeçalho sem "Feedback" */}
       <View style={styles.header}>
         <View style={styles.logoContainer}>
           <Text style={styles.logoTextBold}>bu</Text>
@@ -21,7 +20,6 @@ export default function AboutScreen({ navigation }) {
         </View>
       </View>
 
-      {/* Conteúdo */}
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.sectionTitle}>Colaboradores</Text>
         <View style={styles.card}>
@@ -45,7 +43,6 @@ export default function AboutScreen({ navigation }) {
         </View>
       </ScrollView>
 
-      {/* Rodapé */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>© 2025 Buscreen. Todos os direitos reservados.</Text>
       </View>

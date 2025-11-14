@@ -17,7 +17,7 @@ import {
 
 const { width } = Dimensions.get('window');
 
-// 🔥 Atalhos atualizados
+
 const atalhos = [
   { name: 'Linhas', icon: 'bus-marker', screen: 'Linhas' },
   { name: 'Perfil', icon: 'account-outline', screen: 'Perfil' },
@@ -34,7 +34,7 @@ const ShortcutCard = ({ name, icon, screen, navigation }) => (
   </TouchableOpacity>
 );
 
-// 🔁 Função de navegação centralizada
+
 const handleShortcutPress = (screenName, navigation) => {
   if (screenName === 'Perfil') {
     navigation.navigate('Perfil', {
