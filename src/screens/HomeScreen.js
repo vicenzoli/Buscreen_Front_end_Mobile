@@ -17,11 +17,12 @@ import {
 
 const { width } = Dimensions.get('window');
 
-
+// ⬇️ Aqui adicionamos o novo atalho "Cadastrar Ônibus"
 const atalhos = [
   { name: 'Linhas', icon: 'bus-marker', screen: 'Linhas' },
   { name: 'Perfil', icon: 'account-outline', screen: 'Perfil' },
   { name: 'Sobre nós', icon: 'information-outline', screen: 'Sobre' },
+  { name: 'Cadastrar Ônibus', icon: 'plus-box-outline', screen: 'CadastroOnibus' }, // novo botão
 ];
 
 const ShortcutCard = ({ name, icon, screen, navigation }) => (
@@ -33,7 +34,6 @@ const ShortcutCard = ({ name, icon, screen, navigation }) => (
     <Text style={styles.shortcutText}>{name}</Text>
   </TouchableOpacity>
 );
-
 
 const handleShortcutPress = (screenName, navigation) => {
   if (screenName === 'Perfil') {

@@ -1,14 +1,62 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert
+} from 'react-native';
 
 export default function RegisterScreen({ navigation }) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const handleRegister = () => {
-    Alert.alert('Cadastro realizado!', `Bem-vindo, ${nome}`);
-    navigation.navigate('Login');
+  const handleRegister = async () => {
+    if (!nome || !email || !senha) {
+      Alert.alert("Erro", "Preencha todos os campos.");
+      return;
+    }
+
+    if (!email.includes('@') || !email.includes('.')) {
+      Alert.alert("Erro", "Digite um e-mail válido.");
+      return;
+    }
+
+    if (senha.length < 6) {
+      Alert.alert("Erro", "A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+
+    try {
+      const response = await fetch("https://projeto-sa-buscreen.onrender.com/api/users/cadastro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email, senha })
+      });
+
+      const texto = await response.text();
+      let data;
+      try {
+        data = JSON.parse(texto);
+      } catch {
+        data = { mensagem: texto };
+      }
+
+      if (response.status === 201) {
+        Alert.alert("Sucesso", data.mensagem || "Cadastro realizado com sucesso!");
+        setNome('');
+        setEmail('');
+        setSenha('');
+        navigation.navigate("Login");
+      } else {
+        Alert.alert("Erro", data.mensagem || "Erro ao cadastrar.");
+      }
+    } catch (error) {
+      console.error("Erro ao cadastrar:", error);
+      Alert.alert("Erro", "Erro de conexão com o servidor.");
+    }
   };
 
   return (
@@ -27,6 +75,7 @@ export default function RegisterScreen({ navigation }) {
         placeholder="E-mail"
         placeholderTextColor="#999"
         keyboardType="email-address"
+        autoCapitalize="none"
         value={email}
         onChangeText={setEmail}
       />

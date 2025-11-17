@@ -1,12 +1,51 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert
+} from 'react-native';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const handleLogin = () => {
-    navigation.navigate('Home');
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      Alert.alert("Erro", "Preencha todos os campos.");
+      return;
+    }
+
+    if (!email.includes('@') || !email.includes('.')) {
+      Alert.alert("Erro", "Digite um e-mail válido.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://projeto-sa-buscreen.onrender.com/api/users/login?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`, {
+        method: "GET"
+      });
+
+      const texto = await response.text();
+      let data;
+      try {
+        data = JSON.parse(texto);
+      } catch {
+        data = { mensagem: texto };
+      }
+
+      if (response.status === 200) {
+        Alert.alert("Sucesso", data.mensagem || "Login realizado com sucesso!");
+        navigation.navigate("Home");
+      } else {
+        Alert.alert("Erro", data.mensagem || `Erro no login (status ${response.status}).`);
+      }
+    } catch (error) {
+      console.error("Erro ao logar:", error);
+      Alert.alert("Erro", "Erro de conexão com o servidor.");
+    }
   };
 
   return (
@@ -17,6 +56,8 @@ export default function LoginScreen({ navigation }) {
         style={styles.input}
         placeholder="E-mail"
         placeholderTextColor="#999"
+        keyboardType="email-address"
+        autoCapitalize="none"
         value={email}
         onChangeText={setEmail}
       />
@@ -33,7 +74,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.link}>Não tem conta? Cadastrar-se</Text>
       </TouchableOpacity>
     </View>
